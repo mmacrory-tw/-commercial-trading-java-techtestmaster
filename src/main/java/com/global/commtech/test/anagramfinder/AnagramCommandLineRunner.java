@@ -14,8 +14,12 @@ public class AnagramCommandLineRunner implements CommandLineRunner {
     public void run(final String... args) throws Exception {
         Assert.isTrue(args.length == 1, "Please ensure that the input file is provided");
 
-        final File file = new File(args[0]);
-        Assert.isTrue(file.exists(), args[0] + " Does not exist");
+        final String filePath = args[0];
+        final File file = new File(filePath);
+        Assert.isTrue(file.exists(), filePath + " Does not exist");
+
+        AnagramFinderService anagramFinder = new AnagramFinderService();
+        anagramFinder.findAnagrams(filePath);
 
     }
 }
