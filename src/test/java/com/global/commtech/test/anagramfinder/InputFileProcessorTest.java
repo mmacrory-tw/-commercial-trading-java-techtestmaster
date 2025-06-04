@@ -1,6 +1,10 @@
 package com.global.commtech.test.anagramfinder;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.junit.jupiter.MockitoExtension;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 import java.io.File;
@@ -9,10 +13,11 @@ import java.nio.file.Files;
 import java.util.List;
 import java.util.Map;
 
-
+@ExtendWith(MockitoExtension.class)
 public class InputFileProcessorTest {
 
-    private final InputFileProcessor processor = new InputFileProcessor();
+    @InjectMocks
+    InputFileProcessor mockProcessor;
 
     @Test
     void shouldCreateFileForEachLength() throws IOException {
@@ -21,7 +26,7 @@ public class InputFileProcessorTest {
         assertThat(inputFile.exists()).isTrue();
 
         //when
-        Map<Integer, File> result = processor.groupWordsByLength(inputFile.getPath());
+        Map<Integer, File> result = mockProcessor.groupWordsByLength(inputFile.getPath());
 
         //then
         assertThat(result).containsKey(3);

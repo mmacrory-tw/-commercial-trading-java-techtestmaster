@@ -42,6 +42,4 @@ duplicate is detected we shouldn't waste time sorting chars again
 string inputs in files
 - Output resulting anagrams to one or many files, depending on the intention 
 of the script
-- Additionally, if I had more time I would have made use of Spring's dependency 
-injection functionality rather than declaring new instances
 

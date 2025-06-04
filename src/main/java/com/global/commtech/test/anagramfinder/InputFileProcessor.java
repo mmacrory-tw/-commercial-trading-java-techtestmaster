@@ -1,5 +1,7 @@
 package com.global.commtech.test.anagramfinder;
 
+import org.springframework.stereotype.Component;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +13,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
+@Component
 public class InputFileProcessor {
 
     public Map<Integer, File> groupWordsByLength(String inputFilePath) throws IOException {
