@@ -17,7 +17,7 @@ class AnagramFinderServiceIntegrationTest {
         //given
         String testFilePath = "src/test/resources/example1.txt";
 
-        AnagramFinderService service = new AnagramFinderService(new InputFileProcessor());
+        AnagramFinderService service = new AnagramFinderService();
 
         // when
         service.findAnagrams(testFilePath);

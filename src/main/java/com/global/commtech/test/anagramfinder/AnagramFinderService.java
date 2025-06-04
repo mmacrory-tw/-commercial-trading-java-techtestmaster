@@ -1,10 +1,11 @@
 package com.global.commtech.test.anagramfinder;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
-import java.io.File;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -12,25 +13,35 @@ import java.util.List;
 import java.util.Map;
 
 @Component
+@RequiredArgsConstructor
 public class AnagramFinderService {
 
-    private final InputFileProcessor inputFileProcessor;
-
-    public AnagramFinderService(InputFileProcessor inputFileProcessor) {
-        this.inputFileProcessor = inputFileProcessor;
-    }
-
     public void findAnagrams(String inputFilePath) throws IOException {
-        Map<Integer, File> groupedFiles = inputFileProcessor.groupWordsByLength(inputFilePath);
 
-        for (Map.Entry<Integer, File> entry : groupedFiles.entrySet()) {
-            File file = entry.getValue();
+        try (BufferedReader reader = new BufferedReader(new FileReader(inputFilePath))) {
+            List<String> group = new ArrayList<>();
+            int currentLength = -1;
 
-            List<String> words = Files.readAllLines(file.toPath());
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String word = line.trim();
+                if (word.isEmpty()) continue;
 
-            printAnagrams(words);
+                int len = word.length();
+                if (currentLength == -1) {
+                    currentLength = len;
+                }
+                if (len != currentLength) {
+                    printAnagrams(group);
+                    group.clear();
+                    currentLength = len;
+                }
+                group.add(word);
+            }
 
-            file.delete();
+            if (!group.isEmpty()) {
+                printAnagrams(group);
+            }
         }
     }
 
